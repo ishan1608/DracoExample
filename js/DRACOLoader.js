@@ -396,7 +396,24 @@ THREE.DRACOLoader.prototype = {
         if (typeof this.attributeOptions[attributeName] === 'undefined')
             this.attributeOptions[attributeName] = {};
         return this.attributeOptions[attributeName];
-    }
+    },
+
+    loadAjax: function(url, onDecode) {
+        // Load the obj file
+        var xhr = new XMLHttpRequest();
+
+        xhr.addEventListener('load', function(event) {
+            var response = new Uint8Array(xhr.response);
+
+            // Enable logging to console output.
+            dracoLoader.setVerbosity(1);
+            dracoLoader.decodeDracoFile(response, onDecode);
+        });
+        xhr.open('GET', url, true);
+        // xhr.open('GET', '/models/spider/Only_Spider_with_Animations_Export.drc', true);
+        xhr.responseType = "arraybuffer";
+        xhr.send(null);
+    },
 };
 
 THREE.DRACOLoader.decoderPath = './';

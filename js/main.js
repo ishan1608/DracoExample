@@ -120,25 +120,12 @@ createDracoDecoder();
 
 
 
-
 window.onload = function() {
 
     threejsInit();
     threejsAnimate();
 
-    // Load the obj file
-    var xhr = new XMLHttpRequest();
-
-    // Load OBJ file
-    xhr.addEventListener('load', function(event) {
-        var response = new Uint8Array(xhr.response);
-
-        // Enable logging to console output.
-        dracoLoader.setVerbosity(1);
-        dracoLoader.decodeDracoFile(response, onDecode);
-    });
-    xhr.open('GET', '/models/spider/Only_Spider_with_Animations_Export.drc', true);
-    xhr.responseType = "arraybuffer";
-    xhr.send(null);
+    // Load the 3d model asynchronously
+    dracoLoader.loadAjax('/models/spider/Only_Spider_with_Animations_Export.drc', onDecode);
 
 };
